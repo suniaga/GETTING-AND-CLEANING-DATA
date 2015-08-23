@@ -1,4 +1,4 @@
-	## Reading DATA from different source
+	## Reading and Combining DATA 
 testData <- read.table("UCI HAR Dataset/test/X_test.txt")
 trainData <- read.table("UCI HAR Dataset/train/X_train.txt")
 x <- rbind(testData, trainData)
@@ -19,7 +19,7 @@ activities <- read.table("UCI HAR Dataset/activity_labels.txt")
 activities[,2] = gsub("_", "", tolower(as.character(activities[,2])))
 
 columnsName <- grepl("(std|mean[^F])", features, perl=TRUE)
-3.	Extracts only the measurements on the mean and standard deviation for each measurement,  using grep, from features_columns 
+## Extracts only the measurements on the mean and standard deviation for each measurement,  using grep, from features_columns 
 x<- x[, columnsName]
 names(x) <- features[columnsName]
 names(x) <- gsub("\\(|\\)", "", names(x))
