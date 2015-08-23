@@ -1,5 +1,5 @@
 DATA DICTIONARY
-UCI HAR DATASET..Directorio where all task objects are recorded and are contained in the web pag
+UCI HAR DATASET..Directorio where all task objects are recorded. It comes from the web page
 https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip
 The folder structure is:
 "UCI HAR Data
