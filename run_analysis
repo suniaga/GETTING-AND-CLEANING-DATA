@@ -1,30 +1,58 @@
-	  dataFile <- 'https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip'
-	  dir.create('UCI HAR Dataset')
-	  download.file(dataFile, 'UCI-HAR-dataset.zip')
-	  unzip('./UCI-HAR-dataset.zip')
-	
-	
-	# Combine the training and the test sets to create one data set.
-	xtrain <- read.table('./UCI HAR Dataset/train/X_train.txt')
-	xtest <- read.table('./UCI HAR Dataset/test/X_test.txt')
-	x <- rbind(xtrain, xtest)
-	
-	subjtrain <- read.table('./UCI HAR Dataset/train/subject_train.txt')
-	subjtest <- read.table('./UCI HAR Dataset/test/subject_test.txt')
-	subj <- rbind(subjtrain, subjtest)
-	
-	ytrain <- read.table('./UCI HAR Dataset/train/y_train.txt')
-	ytest <- read.table('./UCI HAR Dataset/test/y_test.txt')
-	y <- rbind(ytrain, ytest)
-	
-	# ## Read Features and Extracts only the measurements on the mean and standard deviation for each measurement. 
-	features <- read.table('./UCI HAR Dataset/features.txt')
-	meansd <- grep("-mean\\(\\)|-std\\(\\)", features[, 2])
-	xmeansd <- x[, meansd]
-	
-	# Uses descriptive activity names to name the activities in the data set
-	names(xmeansd) <- features[meansd, 2]
-	names(xmeansd) <- tolower(names(xmeansd)) 
+	## Reading DATA from different source
+testData <- read.table("UCI HAR Dataset/test/X_test.txt")
+trainData <- read.table("UCI HAR Dataset/train/X_train.txt")
+x <- rbind(testData, trainData)
+
+testSubject <- read.table("UCI HAR Dataset/test/subject_test.txt")
+trainSubject <- read.table("UCI HAR Dataset/train/subject_train.txt")
+subj <- rbind(testSubject, trainSubject)
+
+testLabel <- read.table("UCI HAR Dataset/test/y_test.txt")
+trainLabel <- read.table("UCI HAR Dataset/train/y_train.txt")
+y <- rbind(testLabel, trainLabel)
+
+## Read Features List --> Column Names
+featuresList <- read.table("UCI HAR Dataset/features.txt", stringsAsFactors=FALSE)
+features <- featuresList$V2
+
+activities <- read.table("UCI HAR Dataset/activity_labels.txt")
+activities[,2] = gsub("_", "", tolower(as.character(activities[,2])))
+
+columnsName <- grepl("(std|mean[^F])", features, perl=TRUE)
+3.	Extracts only the measurements on the mean and standard deviation for each measurement,  using grep, from features_columns 
+x<- x[, columnsName]
+names(x) <- features[columnsName]
+names(x) <- gsub("\\(|\\)", "", names(x))
+names(x) <- tolower(names(x))
+
+##adding labels
+y[,1] = activities[y[,1], 2]
+names(y) <- "activity" 
+names(subj) <- "subject"
+tidyData <- cbind(subject, y, x)
+write.table(tidyData, "tidyData.txt")
+
+
+##Second part of the assignement
+##Average
+
+uS = unique(subj)[,1]
+nS = length(uS)
+nA = length(activities[,1])
+nC = length(names(tidyData))
+td = tidyData[ 1:(nS*nA), ]
+row = 1
+for (s in 1:nS) {
+  for (a in 1:nA) {
+    td[row,1] = uS[s]
+    td[row,2] = activities[a, 2]
+    tmp <- tidyData[tidyData$subject==s & tidyData$activity==activities[a,2],]
+    td[row, 3:nC] <- colMeans(tmp[, 3:nC])
+    row = row + 1
+  }
+}
+write.table(td, "tidyData2.txt")
+
 	names(xmeansd) <- gsub("\\(|\\)", "", names(xmeansd))
 	
 	activities <- read.table('./UCI HAR Dataset/activity_labels.txt')
