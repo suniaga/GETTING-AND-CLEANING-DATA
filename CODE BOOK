@@ -2,6 +2,13 @@ DATA DICTIONARY
 UCI HAR DATASET..Directorio where all task objects are recorded and are contained in the web pag
 https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip
 The folder structure is:
+"UCI HAR Data
+Train {inertial signs, subject, XTEST, .ytest}
+Test {inertial signs, XTEST, .ytest}
+Activity_labels
+features
+feature_info
+README
 
 RUN_ANALYSIS ALGORITHM:
 
