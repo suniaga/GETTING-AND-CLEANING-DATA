@@ -1,5 +1,5 @@
 DATA DICTIONARY
-UCI HAR DATASET..Directorio where all task objects are recorded. It comes from the web page
+UCI HAR DATASET..Folder where all task objects are recorded. It comes from the web page
 https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip
 The folder structure is:
 "UCI HAR Data
@@ -13,13 +13,15 @@ README
 RUN_ANALYSIS ALGORITHM:
 
 1. Create directory UCI HAR DATASET and copy the data from page web
-https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip
+https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip 
 
-2. Read train and test tables and combine to create a data set is 3 The combined tables: x,y and subject
+2. Read train and test tables and combine them to create  3 combined data sets. The final combined tables are x,y and subject
 x:  table with 561 variables and 10299 rows resulting from the combination of tables x_train.txt x_test.txt
 y : table with 1 variable and 10299 rows resulting from the combination of tables y_train.txt y_test.txt, which contains the activities that correspond to the rows of x.
 subj: table with 1 variable and 10299 rows resulting from the combination of the subj_train  subj_test tables, which contains a number that identifies the people 
+
 3. Extracts only the measurements on the mean and standard deviation for each measurement, using grep, from features_columns
 
 4. Read the label from activity_labels.txt key codes into R activities DESCRIPTIVES activities and use the activities to name names in the data set
+
 5. Produce a tidy data, named data, using data cbind apropiately to  combine activitlabels subject to tidy With data set
